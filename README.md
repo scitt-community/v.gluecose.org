@@ -1,0 +1,1 @@
+Based on the origin work in https://github.com/gluecose/cose-viewer
