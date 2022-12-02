@@ -24,4 +24,4 @@ const api = {
   getCoseDataFromFragment
 }
 
-module.exports = api;
+export default api
