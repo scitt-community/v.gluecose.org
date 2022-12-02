@@ -18,9 +18,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-import example from './services/example.json'
+import { useEffect, useState } from 'react';
+
 import cose from './services/cose'
-import { useState } from 'react';
+import uri from './services/uri'
 
 const theme = createTheme({
   palette: {
@@ -31,20 +32,46 @@ const theme = createTheme({
 });
 
 function App() {
-  const [object, setObject] = useState(null)
 
+  
+
+  const [object, setObject] = useState(null)
   const handleFilesAccepted = async (files) =>{
     const [file] = files;
+    console.log(file)
+    let cborObject;
+    let coseData;
     if (file.type === 'application/json'){
       const content = new TextDecoder().decode(await file.arrayBuffer());
       const testCase = JSON.parse(content)
       if (testCase?.output?.cbor){
-        const cborObject = await cose.loadFromHex(example.output.cbor) 
-        console.log('cborObject', cborObject)
-        setObject(cborObject)
+        const buf = cose.hexToArrayBuffer(testCase.output.cbor);
+        coseData = buf
+        cborObject = await cose.loadFromArrayBuffer(buf) 
       }
     }
+    if (file.path.endsWith('.cose')){
+      const content = await file.arrayBuffer()
+      coseData = content
+      cborObject = await cose.loadFromArrayBuffer(content) 
+    
+    }
+    setObject(cborObject)
+    console.log('cborObject', cborObject)
+    await uri.handleUriUpdate(coseData)
   }
+
+  useEffect(()=>{
+    if (window.location.hash.startsWith('#pako:')){
+     (async ()=>{
+      const coseData = await uri.getCoseDataFromFragment(window.location.hash)
+      console.log(coseData)
+      const cborObject = await cose.loadFromArrayBuffer(coseData) 
+      setObject(cborObject)
+      console.log('cborObject', cborObject)
+     })()
+    }
+      }, [])
   return (
 
     <ThemeProvider theme={theme}>

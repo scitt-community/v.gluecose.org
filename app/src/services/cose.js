@@ -47,7 +47,7 @@ function prettyUnknown(val) {
     if (ArrayBuffer.isView(val)) {
         prettyValue = prettyBstrHex(val);
     } else if (typeof val == "string") {
-        prettyValue = `"${val}"`;
+        prettyValue = val;
     } else if (typeof val == "number") {
         prettyValue = val.toString();
     } else if (val.tag) {
@@ -99,7 +99,7 @@ function prettyCoseX509(val) {
 const HeaderMapping = new Map([
     [1, ["alg", prettyAlg ]],
     [2, ["crit", prettyCrit ]],
-    [3, ["content type", prettyContentType ]],
+    [3, ["ctyp", prettyContentType ]],
     [4, ["kid", prettyKid ]],
     [5, ["IV", prettyBstrHex ]],
     [6, ["Partial IV", prettyBstrHex ]],
@@ -176,12 +176,19 @@ function decodeCOSESign1(buf) {
     }
     console.log({phdrMap})
     console.log({unprotectedHeader})
-    return {
+
+    const almost = {
         protectedHeader: prettyHeader(phdrMap),
         unprotectedHeader: prettyHeader(unprotectedHeader),
         payload: new TextDecoder().decode(payload)  ,
         signature: jose.base64url.encode(signature) 
     }
+
+    if (almost.protectedHeader.ctyp && almost.protectedHeader.ctyp.startsWith('application/credential+json')){
+        almost.payload = JSON.parse(almost.payload)
+    }
+  
+    return  almost
 }
 
 
@@ -190,12 +197,10 @@ function hexToArrayBuffer(hex) {
     return typedArrayToBuffer(arr);
 }
 
-async function loadFromHex(hex) {
-    const buf = hexToArrayBuffer(hex);
+async function loadFromArrayBuffer(buf) {
     return decodeCOSESign1(buf);
 }
 
-
-const api = { loadFromHex }
+const api = { hexToArrayBuffer, loadFromArrayBuffer }
 
 export default api;
