@@ -174,8 +174,6 @@ function decodeCOSESign1(buf) {
     if (!ArrayBuffer.isView(signature)) {
         throw new Error("Not a COSE_Sign1 message: signature not a bstr");
     }
-    console.log({phdrMap})
-    console.log({unprotectedHeader})
 
     const almost = {
         protectedHeader: prettyHeader(phdrMap),
