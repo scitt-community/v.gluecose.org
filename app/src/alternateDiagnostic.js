@@ -1,5 +1,8 @@
-const COSE_Sign1_TAG = 18
+
 const { cbor } = window
+
+
+// const COSE_Sign1_TAG = 18
 
 function toHexString(byteArray) {
   return Array.prototype.map
