@@ -8,22 +8,24 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.16",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "ace-builds": "^1.10.0",
     "buffer": "^6.0.3",
     "cbor-redux": "1.0.0-3",
     "jose": "^4.11.1",
-    "js-base64": "^3.7.3",
     "pako": "^2.1.0",
     "react": "^18.2.0",
     "react-ace": "^10.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-scripts": "5.0.1",
-    "react-toastify": "^9.1.1",
-    "web-vitals": "^2.1.4"
+    "react-toastify": "^9.1.1"
+  },
+  "devDependencies": {
+    "web-vitals": "^2.1.4",
+    "prettier": "^2.7.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

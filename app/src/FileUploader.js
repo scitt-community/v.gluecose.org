@@ -13,7 +13,7 @@ const theme = createTheme({
   }
 });
 
-const FileUploader = ({ onFilesAccepted, sx }) => {
+const FileUploader = ({ onFilesAccepted, sx, dragText,dropText }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       onFilesAccepted(acceptedFiles);
@@ -27,7 +27,6 @@ const FileUploader = ({ onFilesAccepted, sx }) => {
       {...getRootProps()}
       align="center"
       style={{
-        padding: '32px',
         background: !isDragActive
           ? theme.palette.background.paper
           : theme.palette.background.paper,
@@ -39,7 +38,7 @@ const FileUploader = ({ onFilesAccepted, sx }) => {
         cursor: 'pointer'
       }}
       sx={{
-        height: 200,
+        height: 96,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -49,11 +48,11 @@ const FileUploader = ({ onFilesAccepted, sx }) => {
       <input {...getInputProps()} />
       {isDragActive ? (
         <Typography color={theme.palette.secondary.main}>
-          Drop a COSE_Sign1 json test case here ...
+          {dropText || 'drop file here.'}
         </Typography>
       ) : (
         <Typography color={theme.palette.primary.main}>
-          Drag a COSE_Sign1 json test case here to view decoded data.
+          {dragText || 'drag file here.'}
         </Typography>
       )}
     </Paper>

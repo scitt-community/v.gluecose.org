@@ -5,10 +5,13 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-pastel_on_dark';
 
-const JsonViewReadOnly = ({ value }) => {
+const JsonViewReadOnly = ({ value, sx }) => {
+  if (!value){
+    return <></>
+  }
   return (
     <AceEditor
-      style={{ width: '100%' }}
+      style={{ width: '100%', ...sx }}
       mode="json"
       theme="pastel_on_dark"
       wrapEnabled={true}
