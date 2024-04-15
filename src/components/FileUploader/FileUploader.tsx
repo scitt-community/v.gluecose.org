@@ -2,29 +2,20 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { Paper, Typography } from '@mui/material';
-import { green, blue } from '@mui/material/colors';
-import { createTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: blue,
-    secondary: green
-  }
-});
-
-const FileUploader = ({ onFilesAccepted, sx, dragText,dropText }) => {
+const FileUploader = ({ onFilesAccepted, sx, dragText, dropText }: any) => {
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    (acceptedFiles: any) => {
       onFilesAccepted(acceptedFiles);
     },
     [onFilesAccepted]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
+  const theme = useTheme();
   return (
     <Paper
-      {...getRootProps()}
+      {...getRootProps() as any}
       align="center"
       style={{
         background: !isDragActive
