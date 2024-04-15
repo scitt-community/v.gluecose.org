@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@transmute/edn": "^0.0.5",
+    "cbor-web": "^9.0.2",
     "jose": "^5.2.4",
     "next": "14.2.1",
     "pako": "^2.1.0",

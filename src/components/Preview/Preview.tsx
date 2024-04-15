@@ -14,6 +14,8 @@ import AppNav from '../AppNav';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { diagnose } from 'cbor';
+
 export default function Preview() {
   const router = useRouter();
   const [hexString, setHexString] = React.useState('')
@@ -38,8 +40,16 @@ export default function Preview() {
         const readOnly = window.location.hash.length > 0
         if (hexString.length > 0) {
           const data = Buffer.from(hexString, 'hex')
-          const diag = await edn.render(data, 'application/cbor-diagnostic')
-          setEdnString(diag)
+          try{
+            const diag = await edn.render(data, 'application/cbor-diagnostic')
+            setEdnString(diag)
+          } catch(e){
+            // not very well supported yet
+            // so we expect many errors
+            const diag = await diagnose(data)
+            setEdnString(diag)
+          }
+          
           const hash = await Fragment.set(data)
           if (hash) {
             router.push(hash)
