@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Box, TextField } from '@mui/material'
 
 import * as edn from '@transmute/edn'
-import Fragment from '@/services/Fragment';
+import Fragment from '../../services/Fragment';
 import FileUploader from '../FileUploader';
 
 import { useRouter } from 'next/navigation';
